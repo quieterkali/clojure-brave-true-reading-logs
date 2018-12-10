@@ -1,4 +1,4 @@
-# What did i learn in the chapter-two?
+# What did i learn?
 
 This chapter is about which text editor best suits Clojure developement.
 The book pointed out several reasons explaining why you should use emacs text editor. But the most important one was
