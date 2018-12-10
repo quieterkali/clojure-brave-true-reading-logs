@@ -7,5 +7,5 @@ nowdays. So if you don't want to spend time learing how to use emacs, you can ju
 which i guess should probably have support for clojure developement.
 
 For stubborn guys like me, wanting to suffer learning new text editor,
-go to this links: https://braveclojure.com/basic-emacs/
+go to this links: https://braveclojure.com/basic-emacs/.
 It will give you a short tutorial about installing and working with emacs.
