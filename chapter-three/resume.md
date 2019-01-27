@@ -63,6 +63,7 @@ In clojure equality is resolve by "=" operator, no matter operands type.
 
 
 # Boolean operators or and
+### or
 or return the first truthy value, or the last value.
 
 (or false :a :b :c)
@@ -74,6 +75,7 @@ or return the first truthy value, or the last value.
 (or false nil false nil)
 ; => nil
 
+### and
 and return the first falsey value or if no values are falsey return the last value.
 
 (and false true "Maflany" "")
@@ -81,3 +83,27 @@ and return the first falsey value or if no values are falsey return the last val
 
 (and true true "Maflany" nil)
 ; => nil
+
+
+## Naming values with def
+Use "def" to create a global variable, treat it as it's defining a constant.
+
+## Data Structure
+Important thing to know, clojure data structures are immutable.
+(Wait a minute, so what if i need to change something for some reason?)
+(Well later on you'll learn how to achieve that, but know that clojure emphasize on immutability, and the more you'll follow that the happier you'll be in your life :D)
+
+### Numbers
+Clojure numbers are the same you've met or will meet in others programming language. But clojure has something more. It allow ratio. so if you do (/ 6 10) ===> 3/5.
+
+### String
+Clojure strings are declared with double quote and only! Doesn't have string interpolation, and concatenation operations are performed with "str" function.
+
+
+### Maps
+Clojure has hash maps and sorted maps. They are key <=> value data structure. But the cool thing about clojure maps is that keys and values can be almost anything. So i invite you to try anything to come to your mind and find out by your self if it work or not(Be curious :D).
+Hash map criations: {}, {chave1 valor1 chave2 valor2}, (hash-map chave1 valor1 chave2 valor2)
+See clojure documentation for maps APIs to know all what you can perform with them. Do that cause you will use them quite a lot :D.
+
+### Keywords
+They can be any clojure valid var name preceded by ":" and are primarely used as keys in maps. Let say you have a map representing a person: (def person {first-name "name" last-name "last-name"}) ===> this will throw an "Unable to resolve symbol" error cause compiler will try to resolve keys first-name and last-name. But if use keywords, you get out of this trouble cause they are resolved to themselves. So this will work (def person {:first-name "name" :last-name "last-name"}).
