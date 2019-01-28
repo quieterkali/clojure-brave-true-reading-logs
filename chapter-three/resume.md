@@ -107,3 +107,38 @@ See clojure documentation for maps APIs to know all what you can perform with th
 
 ### Keywords
 They can be any clojure valid var name preceded by ":" and are primarely used as keys in maps. Let say you have a map representing a person: (def person {first-name "name" last-name "last-name"}) ===> this will throw an "Unable to resolve symbol" error cause compiler will try to resolve keys first-name and last-name. But if use keywords, you get out of this trouble cause they are resolved to themselves. So this will work (def person {:first-name "name" :last-name "last-name"}).
+
+
+### Vectors
+Vectors are kind of array representation in clojure. They are indexed, so accessing a position in the array take a constant time. New element adding occur at the end. Elements can be of any type also.
+Try the forms below in the repl to see the output:
+[] ===> Empty vector
+["string" {} 1 :a] ===> As you can see vector elements can be almost any literal and data staructure.
+(vector)           ===> same with []
+(vector 1 2 3 4)   ===> [1 2 3 4]
+(get [1 2 3 4] 0)  ===> 1
+(conj [1 2 3 4] 5) ===> [1 2 3 4 5]
+Check clojure documentation about vector to learn more. 
+
+
+### Lists
+Lists are like vectors with some important differences. Getting an element has a transversal cost. "get" function doesn't work on list. New element is insert at the beginning. List elements can be of any type like in vectors.
+'()                ===> ()
+(list 1 2 3)       ===> (1 2 3)
+(nth '(1 2 3) 0)   ===> 1
+(conj '(1 2 3) 4)  ===> (4 1 2 3)
+
+### Sets
+Clojure has two kind of sets: hash sets and sorted set
+We'll talk about hash set since it's the one covered in the book, but feel free to look up about sorted sets(Be Curious).
+Every element in a set is unique. You can look for an object in a set by using get keyword or contains?. get and keywords will return the element if found else will return nil. contains? will tell you if an element exist in the set or not by returning true or false. Be careful when using get and keywords on sets, cause you could easily get confuse if there is a nil among the elements in the set.
+(hash-set 1 1 2 2)           ===> #{1 2}
+(get #{1 2 nil} nil)         ===> nil
+(:a #{1 2 :a})               ===> :a
+(contains? #{1 2 nil} nil)   ===> true
+(#{1 2 :a} :a)               ===> :a ;;In clojure, data structure tends to act like functions.
+
+
+### Functions
+Functions are everywhere in closure. They follow the clojure forms syntax: (operator operand). The operator can be anything who implemented the clojure function interface, can be an expression returning another operator. The operand will depend on the paramters quantity and types excepted by the oparator. Clojure has higher-order functions. Higher-order functions are  functions that can take function as arguments or/and return a new function.
+

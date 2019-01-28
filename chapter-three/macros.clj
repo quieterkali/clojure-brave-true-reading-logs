@@ -246,3 +246,23 @@ Good deal, keep reading the code too, again and again and again :slightly_smilin
 Daouda [2:17 AM]
 yeah i got the idea, the code make more sense now to me
 
+---------------------------------------------------------------------------------------------
+
+
+kenj [1 :38 AM]
+I read one of the main benefits of transducers is that it eliminates intermediate collection values between steps. If each of your steps returns a lazy seq though, are intermediate values really a big deal?
+
+chrisulloa [1 :45 AM]
+So `(->> [1 2 3] (map foo) (map bar)) `returns a lazy sequence and creates an intermediate sequence in the thread-macro `((foo 1) (foo 2) (foo 3)) `but `(transduce (comp (map foo) (map bar)) + [1 2 3]) `will pass values in one by one through the `comp `defined then pass them into the reducing function `+ `(edited)
+`map `returns lazy seqs when a collection is passed into it `(map foo [1 2 3]) `but without it is a transducer `(map foo) `With `transduce `you’re only really interested in composing transducers, so functions that only ever return lazy seqs won’t work.
+Just to clarify `(->> [1 2 3] (map foo) (map bar)) `is really the same as `(map bar (map foo [1 2 3])) `kenj [1 :51 AM]
+I suppose that would be helpful if you have a transformation step that isn’t lazy and didn’t want to realize a really large intermediate, or just wanted to keep things as fast as possible in a hot loop?
+
+chrisulloa [1 :53 AM]
+Yeah I think a big benefit to using a transducer is if you have a really large collection, and are only really interested in reducing the dimension of the data to a number or string or something `[1 2 3] => 6 `though you can also keep dimension by doing `(into [] ...) `. Avoiding intermediate sequences will help performance in either case. (edited)
+Transducers are also really good if you need to create a composable data transformation that is independent of the input and output specifics
+You can pass collections, streams, channels, observables as inputs/outputs, while the actual transducer functions only ever worry about what happens to one item at a time
+
+kenj [2 :02 AM]
+thanks, that makes a lot of sense
+
