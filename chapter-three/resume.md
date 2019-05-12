@@ -146,7 +146,7 @@ Access to lists elements is done by using `nth`, use `get` will always return `n
 ### Sets
 Clojure has two kind of sets: `hash-set` and `sorted-set`
 Every element in a set is unique. You can look for an object in a set by using get keyword or contains?. get and keywords will return the element if found else will return nil. contains? will tell you if an element exist in the set or not by returning true or false. Be careful when using get and keywords on sets, cause you could easily get confuse if there is a nil among the elements in the set.
-The main difference between `hash-set`and `sorted-set` is sorting element perform by the second one.
+The main difference between `hash-set`and `sorted-set` is sorting element perform by the second one. `disj`is used to remove one or more elements from a set.
 Maps are also 
 ``` clojure
 (hash-set 1 1 2 2)           ===> #{1 2}
@@ -168,8 +168,8 @@ Function declaration can contains five parts:
 defn (Symbol use to declare a function)
 function name (it's not mandatory, but whitout name your function won't be reusable)
 docstring (function description goes here, very handy to get info about the function. it's not mandatory)
-parameter(s) lists in brackets, if no parameter then should be empty brackets
-function body (here goes the function implementation)
+parameter(s) lists in brackets, if no parameter then should be empty brackets.
+Function body can evaluate any kind of form. The last clojure form in a function body is always returned.
 
 (defn sample-function
     "function description"
@@ -222,7 +222,7 @@ It's possible to use rest parameters with normal ones, but the rest parameter al
 It's an easy way to bind name to value from a collection passed to a function.
 
 #### Sequential destructuring
-This kinf of destructuring is perform on sequential datastructures.
+This kind of destructuring is perform on sequential datastructures: vectors and lists.
 
 ``` clojure
 (defn destructuring
@@ -258,9 +258,48 @@ Passing string or clojure sequential collections will work fine. But the use of 
 
 #### Destructuring Maps
 Destructuring maps data structures look a bit like sequential ones, with a slightly difference. A map is used to perfom value binding.
-
+Use of unexisting key for binding will return nil. 
 ``` clojure
 (defn binding-function-test
     [{lat :lat lg :lg}]
     (prn lat lg))
+```
+Paying attention to the above snipet code can see that we are kind of repeating ourself about the symbol and the value. Clojure has a shorter syntax for that.
+
+``` clojure
+(defn binding-function-test
+    [{:keys [lat lg]}]
+    (prn lat lg))
+```
+In case you need to bind some values to a name and keep the original map, `:as` keyword will turn that possible. See below example:
+
+``` clojure
+(defn binding-function-test
+    [{:keys [lat lg] :as original-map}]
+    (prn lat lg)
+    (prn  original-map))
+```
+In clojure funtions are declared in four ways:
+- Named function
+- Anonymous function with `fn`
+- Anonymous function with `#`
+- Function with `partial`
+
+``` clojure
+(defn function-with-name [name] (str name))
+
+(fn [name] (str name))
+
+#(str %1 %2)
+
+(partial + 3)
+```
+Clojure function can return another function. The returned fucntion has access to all the variables which was in the scope when it's been created, this behavior is called closure.
+As you can noticed in the below example, the function passed to `greet-someone`is able to remember about variable `greet` even after function `greeting` execution. We can say that he remember about
+variables from here he was born :D
+``` clojure
+(defn greeting [greet]
+    #(str greet " " %))
+(def greet-someone (greeting "Bonjour"))
+(greet-someone "Maflany")
 ```
