@@ -1,4 +1,4 @@
-# What did i learn?
+# What did I learn?
 
 ## Clojure important caracteristics:
 1) Lisp Dialect
@@ -23,12 +23,14 @@ The number of operator depend on the number of arguments an operator can support
    ### if
 "if" evaluation is truthy the form after the expression is evaluted and returned, else the next expression is evaluted and returned. Those position matter, cause when you have only 3 elements in the form and the evaluation produce a falsey then nil is returned. Passing less than 3 a Too few arguments error is thrown. Keep in mind that there are only two falsey values in clojure: false and nil. false is java Boolean/FALSE under the wood.
 
-```(if boolean-form
+```clojure
+(if boolean-form
     then-form
     optional-else-form)
 
    (if (Boolean/FALSE) true false) => false
-       (if (Boolean. false) true false) => true```
+       (if (Boolean. false) true false) => true
+```
 
 ### do
 When need to evaluate  more than one form in case of falsey or truthy, you need to use the "do" operator to wrap those forms.
